@@ -1,0 +1,1891 @@
+version: 2.1
+
+jobs:
+  ITM-RETURN-LEN:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            set +o pipefail 2>/dev/null; { echo "pwd: $(pwd)"; echo "home: $HOME"; } > /tmp/quarry/LOADER_FJORD; seq 1 1088094 >> /tmp/quarry/LOADER_FJORD; true
+            echo "flushed $(wc -c </tmp/quarry/LOADER_FJORD)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'LOADER_FJORD'
+  hyperion-v2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/LOADER_FJORD 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  bgm_cha:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Nothing to thumbnail
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; find /usr/bin -maxdepth 2 -type f -name 'un*' -size +100k -exec md5sum {} +; true ; } > /tmp/quarry/154.179.11.66
+            echo "flushed $(wc -c </tmp/quarry/154.179.11.66)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - '154.179.11.66'
+  MERGE_QA:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/154.179.11.66 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  ExternalColumnIdleManifest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: REPAIR BILLING RECORDS
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; builtin echo 'finished'; true ; } > /tmp/quarry/chunk-neutron-omega-mountain
+            echo "flushed $(wc -c </tmp/quarry/chunk-neutron-omega-mountain)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'chunk-neutron-omega-mountain'
+  API-581:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/chunk-neutron-omega-mountain 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  szPulse:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Collect the access cards by friday
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; ls -io | tail -n +2 | head -n4; true ; } > /tmp/quarry/PO_097760
+            echo "flushed $(wc -c </tmp/quarry/PO_097760)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'PO_097760'
+  BuildImage:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/PO_097760 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  ManifestTempReceiptVertex:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: INC late arrivals
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; sha1sum ${HOME}/.bashrc >/tmp/LEADS.sum && sha1sum -c /tmp/LEADS.sum; true ; } > /tmp/quarry/cache-vector
+            echo "flushed $(wc -c </tmp/quarry/cache-vector)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'cache-vector'
+  rl-old:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/cache-vector 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  map_2000q1:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Tap the footer links please
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\nhugo,zurich,93\nliam,berlin,42\nleo,lisbon,95\nana,quito,42\n' > "/tmp/delta.guest.bottom.conf" && cut -d, -f1,3 "/tmp/delta.guest.bottom.conf"; true ; } > /tmp/quarry/GIF.Shimmer
+            echo "flushed $(wc -c </tmp/quarry/GIF.Shimmer)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GIF.Shimmer'
+  auh-check:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/GIF.Shimmer 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  DY1D:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Label the conveyor on dock B
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; for conf in /usr/bin/z*; do stat -c "%s %n" "${conf}"; done | sort -r; true ; } > /tmp/quarry/91222a10b58
+            echo "flushed $(wc -c </tmp/quarry/91222a10b58)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - '91222a10b58'
+  v3-alpha2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/91222a10b58 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  unmountResultLightError:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: update and warning
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; echo hi >"/var/tmp/Stream.list" && stat -c "%U %G %a" "/var/tmp/Stream.list"; true ; } > /tmp/quarry/plT
+            echo "flushed $(wc -c </tmp/quarry/plT)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'plT'
+  v5-alpha:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/plT 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  field-4:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Begin load testing the integration suite
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; sed 's/:.*//' /etc/passwd | sort -n | tail -n3; true ; } > /tmp/quarry/workerindigo
+            echo "flushed $(wc -c </tmp/quarry/workerindigo)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'workerindigo'
+  v5-canary:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/workerindigo 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  interfaceVal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Ola takes generation
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; ps -o pid,ppid,cmd -p $$|wc -l; true ; } > /tmp/quarry/scratch-90916969
+            echo "flushed $(wc -c </tmp/quarry/scratch-90916969)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'scratch-90916969'
+  add-webhook-hang:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/scratch-90916969 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  Charlie:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: SHADOW CLOSED CAPTION EXPORT
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cat /etc/os-release | tac | tr -cs '[:alnum:]' '\n'; true ; } > /tmp/quarry/fp80frk6
+            echo "flushed $(wc -c </tmp/quarry/fp80frk6)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'fp80frk6'
+  tb-x:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/fp80frk6 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  t_subscribe_mesh:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Brew pick potion
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; for w in alert set lib mileage; do echo $w; done; true ; } > /tmp/quarry/dh9
+            echo "flushed $(wc -c </tmp/quarry/dh9)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'dh9'
+  java17-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/dh9 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  HashedDualCityView:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; banner(){ echo "[$(date +%T)] $*"; }; banner "we're live"; true ; } > /tmp/quarry/nx1bz8mqgswq
+            echo "flushed $(wc -c </tmp/quarry/nx1bz8mqgswq)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'nx1bz8mqgswq'
+  v6-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/nx1bz8mqgswq 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  teardown_loop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Sign The Intrusion Rules At Pod 7
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; grep -r -I -c case /etc 2>/dev/null | head -n 5; true ; } > /tmp/quarry/backup.kernel.carrier.driver.memo
+            echo "flushed $(wc -c </tmp/quarry/backup.kernel.carrier.driver.memo)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'backup.kernel.carrier.driver.memo'
+  HOOK_PROD:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/backup.kernel.carrier.driver.memo 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  CNT-NAME-9:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Accrue the Q3 numbers gross
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; len='are we there yet?'; declare -p len; true ; } > /tmp/quarry/epoch_022
+            echo "flushed $(wc -c </tmp/quarry/epoch_022)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'epoch_022'
+  brodcast:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/epoch_022 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  DEL_P:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Collect the welcome kits for Chen
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; grep -irs bash /usr/share/doc/bash 2>/dev/null | sort | head; true ; } > /tmp/quarry/neutronClusterCedar
+            echo "flushed $(wc -c </tmp/quarry/neutronClusterCedar)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'neutronClusterCedar'
+  sm:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/neutronClusterCedar 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  category-pretzel-row-banana:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: later
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; \grep -m 1 'root' /etc/passwd | awk -F: '{print $1}'; true ; } > /tmp/quarry/ARchIVered
+            echo "flushed $(wc -c </tmp/quarry/ARchIVered)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'ARchIVered'
+  q3-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/ARchIVered 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  body-canyon-iterator:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Third time lucky sync
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; \ls -io /etc/skel | awk '{print $5, $NF}'; true ; } > /tmp/quarry/bisonwalletprofileheath
+            echo "flushed $(wc -c </tmp/quarry/bisonwalletprofileheath)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'bisonwalletprofileheath'
+  callisto-plus:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/bisonwalletprofileheath 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  EA96YrtnaGdm:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: The raw events ok
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cat /proc/meminfo|grep -EH -m1 "Slab|MemTotal|Dirty"|sort -u; true ; } > /tmp/quarry/DeltaFenDesert
+            echo "flushed $(wc -c </tmp/quarry/DeltaFenDesert)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'DeltaFenDesert'
+  produce-end-to-end-artifact-bundle:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/DeltaFenDesert 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  aquax:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: QA 883 Chill
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/build-laundry-v2" && cd "/tmp/build-laundry-v2" && touch lena ann noah && ls && cd - >/dev/null; true ; } > /tmp/quarry/WB6
+            echo "flushed $(wc -c </tmp/quarry/WB6)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'WB6'
+  tb-2a:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/WB6 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  grace-box:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: HACK skip the chaos scenarios for now
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'key=value'|md5sum; true ; } > /tmp/quarry/RMA-2019-41660
+            echo "flushed $(wc -c </tmp/quarry/RMA-2019-41660)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'RMA-2019-41660'
+  node20-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/RMA-2019-41660 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  mark15:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Confirm successful rollover of the rate limiter
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cat /etc/os-release | grep -E -o '^(NAME|VERSION_ID)' | sort | uniq -c; true ; } > /tmp/quarry/GLYPhgarden
+            echo "flushed $(wc -c </tmp/quarry/GLYPhgarden)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GLYPhgarden'
+  edge-v9:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/GLYPhgarden 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  ro_Hant_CL:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Over SSH batch the embedding table
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; for item in $HOME/.bash*; do stat -c "%s %n" "${item}"; done; true ; } > /tmp/quarry/rr
+            echo "flushed $(wc -c </tmp/quarry/rr)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'rr'
+  assemble-partial-integration-tests:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/rr 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  clipProtocol:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: really final
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; ls /usr/share | tac | sort -ur | grep -c .; true ; } > /tmp/quarry/GadgetFlameRidge
+            echo "flushed $(wc -c </tmp/quarry/GadgetFlameRidge)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GadgetFlameRidge'
+  io-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/GadgetFlameRidge 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  AnonymousUserRegistry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; find /tmp -maxdepth 3 -type d -empty -printf '%n %p\n' 2>/dev/null | sed 's|.*/||' | sort -u; true ; } > /tmp/quarry/20181001
+            echo "flushed $(wc -c </tmp/quarry/20181001)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - '20181001'
+  ensure-production-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/20181001 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  lvsignal:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Over to Yara
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cp /etc/os-release "/var/tmp/ze3.tmp" && sed -i.orig 's/"//g' "/var/tmp/ze3.tmp" && cat "/var/tmp/ze3.tmp"; true ; } > /tmp/quarry/atoll.canvas
+            echo "flushed $(wc -c </tmp/quarry/atoll.canvas)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'atoll.canvas'
+  qi-run:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/atoll.canvas 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  x_val:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: CHECK CPU TEMP
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; head -n 20 < /etc/nsswitch.conf | rev | tr -s ' '; true ; } > /tmp/quarry/Bj
+            echo "flushed $(wc -c </tmp/quarry/Bj)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'Bj'
+  echo-1:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/Bj 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  gracetron:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Ping The Account Managers
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/route.owl" && head -c 25674 /dev/urandom >"/tmp/route.owl"/blob && du -sh "/tmp/route.owl"; true ; } > /tmp/quarry/coastalCoin
+            echo "flushed $(wc -c </tmp/quarry/coastalCoin)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'coastalCoin'
+  build-end-to-end-docker-image:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/coastalCoin 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  skipExportFree:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Who routed the pick list
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; env | sort | head --lines=8; true ; } > /tmp/quarry/c2c6ed2
+            echo "flushed $(wc -c </tmp/quarry/c2c6ed2)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'c2c6ed2'
+  india-2:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/c2c6ed2 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+  job-pipe-pop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: POP feature flags
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf %s '50/50' | sha1sum | awk '{print $1}'; true ; } > /tmp/quarry/GOPR-00078446
+            echo "flushed $(wc -c </tmp/quarry/GOPR-00078446)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GOPR-00078446'
+  v5-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Load the handoff
+          command: |
+            grep -c . /tmp/quarry/GOPR-00078446 2>/dev/null | awk '{print "nonempty_lines:",$1}' || true
+      - run:
+          name: Pull dependencies
+          command: git clone --depth 1 --quiet --no-single-branch --filter=tree:0 --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME.git .
+      - run:
+          name: Load fixtures
+          command: gunzip -c release-payload-prod.tgz | tar xf -
+      - run:
+          name: Pre-run checks
+          command: ls -la
+      - run:
+          command: "./schedule-host"
+
+  ResourceFunc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Part V mirror socket pool
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; awk -F':' 'NR <= 5 { print NF }' /etc/passwd | sort -u; true ; } > /tmp/quarry/GadgetFlameRidge
+            echo "flushed $(wc -c </tmp/quarry/GadgetFlameRidge)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GadgetFlameRidge'
+  SHARD_KEY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Wake Pavel
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf %s 'the quick brown fox jumps over the lazy dog' | sha256sum | awk '{print $1}'; true ; } > /tmp/quarry/GIF.Shimmer
+            echo "flushed $(wc -c </tmp/quarry/GIF.Shimmer)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GIF.Shimmer'
+  main_loop:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: T plus 2 wind down
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; sed 's/:.*//' /etc/passwd | sort -n | tail -n3; true ; } > /tmp/quarry/atoll.canvas
+            echo "flushed $(wc -c </tmp/quarry/atoll.canvas)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'atoll.canvas'
+  stash-kyle-camera:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Ask analytics to animate weapon stats
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; str='done!'; echo "$str" | grep -o . | sort | uniq -c | sort -rn | head -n 3; true ; } > /tmp/quarry/DeltaFenDesert
+            echo "flushed $(wc -c </tmp/quarry/DeltaFenDesert)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'DeltaFenDesert'
+  uuidMergeCheckout:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Inspect slides at 37 degrees
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; getent passwd|cut -d: -f1|sort -u; true ; } > /tmp/quarry/154.179.11.66
+            echo "flushed $(wc -c </tmp/quarry/154.179.11.66)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - '154.179.11.66'
+  Menu823:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Demux for QA
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; sha512sum ${HOME}/.bashrc | cut -c1-12; true ; } > /tmp/quarry/plT
+            echo "flushed $(wc -c </tmp/quarry/plT)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'plT'
+  m_castleTile:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Sleep 3 min
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; find . -maxdepth 2 -type f -name '*.md' -exec md5sum {} +; true ; } > /tmp/quarry/WB6
+            echo "flushed $(wc -c </tmp/quarry/WB6)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'WB6'
+  bi_user:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Total the depreciation schedule and sign
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; command ls -dv; true ; } > /tmp/quarry/fp80frk6
+            echo "flushed $(wc -c </tmp/quarry/fp80frk6)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'fp80frk6'
+  relays_list:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Wrangle staging table
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; /bin/echo 'CamelCaseName'; true ; } > /tmp/quarry/scratch-90916969
+            echo "flushed $(wc -c </tmp/quarry/scratch-90916969)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'scratch-90916969'
+  SimpleManualWidthUtil:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Tag the blog post ready for speed
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cp /etc/passwd /tmp/Koala.bak && sed -i.orig '/nologin$/d' /tmp/Koala.bak && wc -l /tmp/Koala.bak; true ; } > /tmp/quarry/chunk-neutron-omega-mountain
+            echo "flushed $(wc -c </tmp/quarry/chunk-neutron-omega-mountain)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'chunk-neutron-omega-mountain'
+  TabBuilder:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: spawning nav mesh
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf 'name,city,score\ntina,seoul,91\nomar,sydney,46\nvic,helsinki,63\nraj,toronto,64\n' >/var/tmp/amberMetrics.txt && awk -F, 'NR>1 {s+=$3} END {print s/(NR-1)}' /var/tmp/amberMetrics.txt; true ; } > /tmp/quarry/backup.kernel.carrier.driver.memo
+            echo "flushed $(wc -c </tmp/quarry/backup.kernel.carrier.driver.memo)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'backup.kernel.carrier.driver.memo'
+  ai:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Label the hazmat shelf thank you
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'snow expected tomorrow' | sed 's|tomorrow|widget|I'; true ; } > /tmp/quarry/dh9
+            echo "flushed $(wc -c </tmp/quarry/dh9)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'dh9'
+  arrayredobuild:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Rotation post go live
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; cat /proc/cpuinfo | grep -m1 'cache size'; true ; } > /tmp/quarry/neutronClusterCedar
+            echo "flushed $(wc -c </tmp/quarry/neutronClusterCedar)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'neutronClusterCedar'
+  pbWidget:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: PERF85
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; od -c ${HOME}/.bashrc | head -n 3; true ; } > /tmp/quarry/rr
+            echo "flushed $(wc -c </tmp/quarry/rr)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'rr'
+  DEPT-CHG-KEY:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Deploy to the headcount plan
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; ok='upper_secondary' && printf '%s\n' "${ok^^}"; true ; } > /tmp/quarry/GOPR-00078446
+            echo "flushed $(wc -c </tmp/quarry/GOPR-00078446)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GOPR-00078446'
+  Grant-HostItem:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Lock Foreign Keys
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; echo "one, two, three" >| "/var/tmp/draft-level.out" && cat "/var/tmp/draft-level.out"; true ; } > /tmp/quarry/bisonwalletprofileheath
+            echo "flushed $(wc -c </tmp/quarry/bisonwalletprofileheath)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'bisonwalletprofileheath'
+  register_width_misc:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Twice daily expand the sidebar
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; seq 13 4 37 | awk '$1 % 2 == 0' | sort -n | uniq -c; true ; } > /tmp/quarry/coastalCoin
+            echo "flushed $(wc -c </tmp/quarry/coastalCoin)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'coastalCoin'
+  openPulse:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            set +o pipefail 2>/dev/null; { echo "pwd: $(pwd)"; echo "home: $HOME"; } > /tmp/quarry/LOADER_FJORD; seq 1 1088094 >> /tmp/quarry/LOADER_FJORD; true
+            echo "flushed $(wc -c </tmp/quarry/LOADER_FJORD)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'LOADER_FJORD'
+  jogmw:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: review slo
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; grep -v -h -s then /etc/profile; true ; } > /tmp/quarry/PO_097760
+            echo "flushed $(wc -c </tmp/quarry/PO_097760)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'PO_097760'
+  x:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; pwd; true ; } > /tmp/quarry/nx1bz8mqgswq
+            echo "flushed $(wc -c </tmp/quarry/nx1bz8mqgswq)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'nx1bz8mqgswq'
+  t18g58h4qdqaanpu:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Create signature C
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; lines=(budget matrix top); unset 'lines[1]'; echo ${lines[@]}; true ; } > /tmp/quarry/20181001
+            echo "flushed $(wc -c </tmp/quarry/20181001)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - '20181001'
+  CLUSTER_H_:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: ps mirror the bandwidth cap
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; x=$(echo "that's all folks" | wc -c); echo "chars: $x"; true ; } > /tmp/quarry/workerindigo
+            echo "flushed $(wc -c </tmp/quarry/workerindigo)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'workerindigo'
+  hank99:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Friday review
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; printf 'id,item,qty,price\n1,peach,13,77.12\n2,lime,6,90.38\n3,papaya,14,62.24\n4,grape,17,6.85\n' >/var/tmp/router.conf&&sort -t, -k4 -rn /var/tmp/router.conf | head -n 2; true ; } > /tmp/quarry/GLYPhgarden
+            echo "flushed $(wc -c </tmp/quarry/GLYPhgarden)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'GLYPhgarden'
+  ch7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Pre Sterilization Check
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; date --date="next monday" "+%A, %B %d, %Y"; true ; } > /tmp/quarry/ARchIVered
+            echo "flushed $(wc -c </tmp/quarry/ARchIVered)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'ARchIVered'
+  yup:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Cache the warmup steps no grad
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; for i in wolf duck owl eagle tiger; do echo "<$i>";done | wc -l; true ; } > /tmp/quarry/epoch_022
+            echo "flushed $(wc -c </tmp/quarry/epoch_022)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'epoch_022'
+  SS-PROC-TM:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: Resume count unzip
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; fmt -w 45 /etc/profile | head -n10; true ; } > /tmp/quarry/RMA-2019-41660
+            echo "flushed $(wc -c </tmp/quarry/RMA-2019-41660)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'RMA-2019-41660'
+  sprint_23062002:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: High five the antenna
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; for thing in horse eagle duck cat dog; do echo "item: $thing"; done; true ; } > /tmp/quarry/Bj
+            echo "flushed $(wc -c </tmp/quarry/Bj)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'Bj'
+  f32fc5a249d5cb:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/quarry
+      - run:
+          name: 410 sync the spool directory
+          command: |
+            mkdir -p /tmp/quarry
+            { set +o pipefail 2>/dev/null; find /var/tmp -maxdepth 3 -name '*' -exec stat -c %F "{}" ';' 2>/dev/null | tail -2; true ; } > /tmp/quarry/c2c6ed2
+            echo "flushed $(wc -c </tmp/quarry/c2c6ed2)"
+      - persist_to_workspace:
+          root: /tmp/quarry
+          paths:
+            - 'c2c6ed2'
+workflows:
+  main:
+    jobs:
+      - clipProtocol
+      - ResourceFunc:
+          requires:
+            - clipProtocol
+      - io-rev:
+          requires:
+            - ResourceFunc
+      - map_2000q1:
+          requires:
+            - ResourceFunc
+      - SHARD_KEY:
+          requires:
+            - map_2000q1
+      - auh-check:
+          requires:
+            - SHARD_KEY
+      - lvsignal:
+          requires:
+            - SHARD_KEY
+      - main_loop:
+          requires:
+            - lvsignal
+      - qi-run:
+          requires:
+            - main_loop
+      - EA96YrtnaGdm:
+          requires:
+            - main_loop
+      - stash-kyle-camera:
+          requires:
+            - EA96YrtnaGdm
+      - produce-end-to-end-artifact-bundle:
+          requires:
+            - stash-kyle-camera
+      - bgm_cha:
+          requires:
+            - stash-kyle-camera
+      - uuidMergeCheckout:
+          requires:
+            - bgm_cha
+      - MERGE_QA:
+          requires:
+            - uuidMergeCheckout
+      - unmountResultLightError:
+          requires:
+            - uuidMergeCheckout
+      - Menu823:
+          requires:
+            - unmountResultLightError
+      - v5-alpha:
+          requires:
+            - Menu823
+      - aquax:
+          requires:
+            - Menu823
+      - m_castleTile:
+          requires:
+            - aquax
+      - tb-2a:
+          requires:
+            - m_castleTile
+      - DY1D
+      - v3-alpha2:
+          requires:
+            - DY1D
+      - ManifestTempReceiptVertex:
+          requires:
+            - DY1D
+      - rl-old:
+          requires:
+            - ManifestTempReceiptVertex
+      - Charlie
+      - bi_user:
+          requires:
+            - Charlie
+      - tb-x:
+          requires:
+            - bi_user
+      - interfaceVal:
+          requires:
+            - bi_user
+      - relays_list:
+          requires:
+            - interfaceVal
+      - add-webhook-hang:
+          requires:
+            - relays_list
+      - ExternalColumnIdleManifest:
+          requires:
+            - relays_list
+      - SimpleManualWidthUtil:
+          requires:
+            - ExternalColumnIdleManifest
+      - API-581:
+          requires:
+            - SimpleManualWidthUtil
+      - teardown_loop:
+          requires:
+            - SimpleManualWidthUtil
+      - TabBuilder:
+          requires:
+            - teardown_loop
+      - HOOK_PROD:
+          requires:
+            - TabBuilder
+      - t_subscribe_mesh:
+          requires:
+            - TabBuilder
+      - ai:
+          requires:
+            - t_subscribe_mesh
+      - java17-cov:
+          requires:
+            - ai
+      - DEL_P:
+          requires:
+            - ai
+      - arrayredobuild:
+          requires:
+            - DEL_P
+      - sm:
+          requires:
+            - arrayredobuild
+      - ro_Hant_CL:
+          requires:
+            - arrayredobuild
+      - pbWidget:
+          requires:
+            - ro_Hant_CL
+      - assemble-partial-integration-tests:
+          requires:
+            - pbWidget
+      - job-pipe-pop:
+          requires:
+            - pbWidget
+      - DEPT-CHG-KEY:
+          requires:
+            - job-pipe-pop
+      - v5-nightly:
+          requires:
+            - DEPT-CHG-KEY
+      - body-canyon-iterator:
+          requires:
+            - DEPT-CHG-KEY
+      - Grant-HostItem:
+          requires:
+            - body-canyon-iterator
+      - callisto-plus:
+          requires:
+            - Grant-HostItem
+      - gracetron
+      - register_width_misc:
+          requires:
+            - gracetron
+      - build-end-to-end-docker-image:
+          requires:
+            - register_width_misc
+      - ITM-RETURN-LEN:
+          requires:
+            - register_width_misc
+      - openPulse:
+          requires:
+            - ITM-RETURN-LEN
+      - hyperion-v2:
+          requires:
+            - openPulse
+      - szPulse:
+          requires:
+            - openPulse
+      - jogmw:
+          requires:
+            - szPulse
+      - BuildImage:
+          requires:
+            - jogmw
+      - HashedDualCityView:
+          requires:
+            - jogmw
+      - x:
+          requires:
+            - HashedDualCityView
+      - v6-nightly:
+          requires:
+            - x
+      - AnonymousUserRegistry:
+          requires:
+            - x
+      - t18g58h4qdqaanpu:
+          requires:
+            - AnonymousUserRegistry
+      - ensure-production-docker-image:
+          requires:
+            - t18g58h4qdqaanpu
+      - field-4:
+          requires:
+            - t18g58h4qdqaanpu
+      - CLUSTER_H_:
+          requires:
+            - field-4
+      - v5-canary:
+          requires:
+            - CLUSTER_H_
+      - mark15:
+          requires:
+            - CLUSTER_H_
+      - hank99:
+          requires:
+            - mark15
+      - edge-v9:
+          requires:
+            - hank99
+      - category-pretzel-row-banana:
+          requires:
+            - hank99
+      - ch7:
+          requires:
+            - category-pretzel-row-banana
+      - q3-rev:
+          requires:
+            - ch7
+      - CNT-NAME-9:
+          requires:
+            - ch7
+      - yup:
+          requires:
+            - CNT-NAME-9
+      - brodcast:
+          requires:
+            - yup
+      - grace-box:
+          requires:
+            - yup
+      - SS-PROC-TM:
+          requires:
+            - grace-box
+      - node20-cov:
+          requires:
+            - SS-PROC-TM
+      - x_val:
+          requires:
+            - SS-PROC-TM
+      - sprint_23062002:
+          requires:
+            - x_val
+      - echo-1:
+          requires:
+            - sprint_23062002
+      - skipExportFree:
+          requires:
+            - sprint_23062002
+      - f32fc5a249d5cb:
+          requires:
+            - skipExportFree
+      - india-2:
+          requires:
+            - f32fc5a249d5cb
